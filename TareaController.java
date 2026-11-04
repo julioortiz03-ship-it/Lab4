@@ -1,35 +1,42 @@
 public class TareaController {
-
-    private AlmacenarTareas almacenamiento;
-    private int contadorTareas;
+    private final AlmacenarTareas almacenamiento;
+    private int siguienteId = 0;
 
     public TareaController(AlmacenarTareas almacenamiento) {
         this.almacenamiento = almacenamiento;
-        this.contadorTareas = 0;
     }
 
     public Tarea agregarTarea(String titulo, String descripcion) {
-        Tarea nueva = new Tarea(contadorTareas++, titulo, descripcion);
-        almacenamiento.guardar(nueva);
-        return nueva;
+        Tarea tarea = new Tarea(siguienteId, titulo, descripcion);
+        almacenamiento.guardar(tarea);
+        siguienteId++;
+        return tarea;
     }
-
     public void completarTarea(int id) {
-        Tarea t = almacenamiento.buscarPorId(id);
+        Tarea tarea = almacenamiento.buscarPorId(id);
 
-        if (t == null) {
-            throw new IllegalArgumentException("No hay una tarea con el ID: " + id);
-        }
-        if (t.getCompletada()) {
-            throw new IllegalStateException("La tarea ya estaba completada.");
+        if (tarea == null) {
+            throw new IllegalArgumentException(
+                "No existe una tarea con ese ID."
+            );
         }
 
-        t.setCompletada(true);
+        if (tarea.getCompletada()) {
+            throw new IllegalStateException(
+                "La tarea ya estaba completada."
+            );
+        }
+
+        tarea.setCompletada(true);
     }
 
     public void eliminarTarea(int id) {
-        if (!almacenamiento.eliminar(id)) {
-            throw new IllegalArgumentException("No hay una tarea con el ID: " + id);
+        boolean eliminada = almacenamiento.eliminar(id);
+
+        if (!eliminada) {
+            throw new IllegalArgumentException(
+                "No existe una tarea con ese ID."
+            );
         }
     }
 }
