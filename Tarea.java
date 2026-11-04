@@ -1,27 +1,32 @@
 public class Tarea {
-
-    private int id;
-    private String titulo;
-    private String descripcion;
+    private final int id;
+    private final String titulo;
+    private final String descripcion;
     private boolean completada;
-    
-    public Tarea(int id, String t, String c) {
+    public Tarea(int id, String titulo, String descripcion) {
         this.id = id;
-        titulo = t;
-        descripcion = c;
-        completada = false;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.completada = false;
     }
 
-    void setCompletada(boolean estadoNuevo){
-        completada = estadoNuevo;
-    }
-
-    boolean getCompletada(){
-        return completada;
-    }
-
-    int getId(){
+    public int getId() {
         return id;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public boolean getCompletada() {
+        return completada;
+    }
+
+    public void setCompletada(boolean estadoNuevo) {
+        this.completada = estadoNuevo;
+    }
 }
